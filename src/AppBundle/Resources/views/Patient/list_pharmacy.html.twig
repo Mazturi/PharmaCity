@@ -1,0 +1,60 @@
+{% extends '@App/layout.html.twig' %}
+
+
+{% block title %}Pharmacy list{% endblock %}
+{% block content %}
+    <div class="container">
+        <h1 style="text-align: center">Pharmacies Near you</h1>
+        <div class="row" style="margin-top: 25px;margin-left: 50px;margin-right: 50px">
+            <div class="col-lg-3">
+                <table class="table">
+                    <tr class="thead-dark">
+                        <th style="text-align: center">Pharmacy name</th>
+                    </tr>
+                    {% for pharmacy in pharmas %}
+                        <tr style="text-align: center"><td>{{ pharmacy.namePharmacy }}</td></tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <div class="col-lg-3">
+                <table class="table">
+                    <tr class="thead-dark">
+                        <th style="text-align: center">Opening time</th>
+                    </tr>
+                    {% for pharmacy in pharmas %}
+                        <tr style="text-align: center"><td>{{ pharmacy.openingTime }}</td></tr>
+                        {#<tr style="text-align: center"><td>{{ pharmacy.user.username }}</td></tr>#}
+                    {% endfor %}
+                </table>
+            </div>
+            <div class="col-lg-3">
+                <table class="table">
+                    <tr class="thead-dark">
+                        <th style="text-align: center">Adress</th>
+                    </tr>
+                    {% for pharmacy in pharmas %}
+                        <tr style="text-align: center"><td>{{ pharmacy.user.address }}</td></tr>
+                        {#<tr style="text-align: center"><td>{{ pharmacy.user.username }}</td></tr>#}
+                    {% endfor %}
+                </table>
+            </div>
+            <div class="col-lg-3">
+                <table class="table">
+                    <tr class="thead-dark">
+                        <th style="text-align: center">Phone number</th>
+                    </tr>
+                    {% for pharmacy in pharmas %}
+                        <tr style="text-align: center"><td>{{ pharmacy.user.phoneNumber }}</td></tr>
+                        {#<tr style="text-align: center"><td>{{ pharmacy.user.username }}</td></tr>#}
+                    {% endfor %}
+                </table>
+            </div>
+
+
+
+        </div>
+    </div>
+    {#{{ dump(pharmas) }}#}
+
+
+{% endblock %}

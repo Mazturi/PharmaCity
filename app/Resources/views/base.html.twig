@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="{{ asset('template/img/MainLogo.png') }}" type="image/png">
+    <title>{% block title %}PHARMACITY{% endblock %}</title>
+    {% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('template/css/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ asset('template/vendors/linericon/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('template/css/font-awesome.min.css') }}">
+    {#<link rel="stylesheet" href="{{ asset('template/vendors/owl-carousel/owl.carousel.min.css') }}">#}
+    {#<link rel="stylesheet" href="{{ asset('template/vendors/lightbox/simpleLightbox.css') }}">#}
+    {#<link rel="stylesheet" href="{{ asset('template/vendors/nice-select/css/nice-select.css') }}">#}
+    {#<link rel="stylesheet" href="{{ asset('template/vendors/animate-css/animate.css') }}">#}
+    <link rel="stylesheet" href="{{ asset('template/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('template/css/responsive.css') }}">
+    {% endblock %}
+</head>
+<body>
+<header class="header_area">
+    <div class="main_menu">
+        <nav class="navbar navbar-expand-lg navbar-light">
+                <div class="container">
+                <a class="navbar-brand logo_h" href="{{ path('homepage') }}"><img src="{{ asset('template/img/MainLogo.png') }}"  alt="logo"></a>
+                    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#user" aria-controls="user" aria-expanded="false" aria-label="Toggle navigation">
+                        <img src="{{ asset('upload/picture_user/default_picture.png') }}" class="picture-user" alt="user">
+                    </button>
+                    {% else %}
+                    <button class="navbar-toggler" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
+                        <a href="{{ path('fos_user_security_login') }}" class="connection-inscription">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+                        <a href="{{ path('fos_user_registration_register') }}" class="connection-inscription">Insciption</a>
+                    </button>
+                    {% endif %}
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                    <div class="collapse navbar-collapse offset visibility-menu-user-in-small-screen" id="user">
+                        <ul class="nav navbar-nav  menu_nav ml-auto">
+                            <li class="nav-item"><a class="nav-link" href="{{ path('fos_user_profile_edit') }}">{{ app.user.username }}</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{ path('add_info_patient') }}">Fiche Médical</a></li>
+                            {% if is_granted('ROLE_DOCTOR') %}
+                                <li class="nav-item"><a class="nav-link" href="{{ path('add_info_doctor') }}">PROFIL DOCTEUR</a></li>
+                            {% endif %}
+                            {% if is_granted('ROLE_PHARMACY') %}
+                                <li class="nav-item"><a class="nav-link" href="{{ path('add_info_pharmacy') }}">PROFIL PHARMACY</a></li>
+                            {% endif %}
+                            {% if is_granted('ROLE_SUPPLIER') %}
+                                <li class="nav-item"><a class="nav-link" href="{{ path('add_info_supplier') }}">PROFIL FOURNISSEUR</a></li>
+                            {% endif %}
+                            <li class="nav-item"><a class="nav-link" href="{{ path('fos_user_change_password') }}">Changer mot de passe</a></li>
+                            <li class="nav-item"><a href="{{ path('fos_user_security_logout') }}" class="nav-link" >{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a></li>
+                        </ul>
+                    </div>
+                    {% endif %}
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse offset col-lg-7" id="navbarSupportedContent">
+                    <ul class="nav navbar-nav menu_nav ml-auto">
+                        <li class="nav-item active"><a class="nav-link" href="{{ path('homepage') }}">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#">About</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#">Services</a>
+                        {#<li class="nav-item submenu dropdown">#}
+                            {#<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Pages</a>#}
+                            {#<ul class="dropdown-menu">#}
+                                {#<li class="nav-item"><a class="nav-link" href="#">Projects</a>#}
+                                {#<li class="nav-item"><a class="nav-link" href="#">Elements</a></li>#}
+                            {#</ul>#}
+                        {#</li>#}
+                        {#<li class="nav-item submenu dropdown">#}
+                            {#<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Blog</a>#}
+                            {#<ul class="dropdown-menu">#}
+                                {#<li class="nav-item"><a class="nav-link" href="#">Blog</a></li>#}
+                                {#<li class="nav-item"><a class="nav-link" href="#">Blog Details</a></li>#}
+                            {#</ul>#}
+                        {#</li>#}
+                        {#<li class="nav-item"><a class="nav-link" href="#">Contact</a></li>#}
+                    </ul>
+                </div>
+
+                    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                    <div class="visibility-menu-user-in-big-screen">
+                        <div class="collapse navbar-collapse offset col-lg-2">
+                            <ul class="nav navbar-nav menu_nav ml-auto">
+                                <li class="nav-item submenu dropdown">
+                                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                                        <img src="{{ asset('upload/picture_user/default_picture.png') }}" class="picture-user" alt="user">
+                                    </a>
+                                    <ul class="nav navbar-nav  menu_nav ml-auto">
+                                        <li class="nav-item"><a class="nav-link" href="{{ path('fos_user_profile_edit') }}">{{ app.user.username }}</a></li>
+                                        <li class="nav-item"><a class="nav-link" href="{{ path('add_info_patient') }}">Fiche Médical</a></li>
+                                        {% if is_granted('ROLE_DOCTOR') %}
+                                            <li class="nav-item"><a class="nav-link" href="{{ path('add_info_doctor') }}">PROFIL DOCTEUR</a></li>
+                                        {% endif %}
+                                        {% if is_granted('ROLE_PHARMACY') %}
+                                            <li class="nav-item"><a class="nav-link" href="{{ path('add_info_pharmacy') }}">PROFIL PHARMACY</a></li>
+                                        {% endif %}
+                                        {% if is_granted('ROLE_SUPPLIER') %}
+                                            <li class="nav-item"><a class="nav-link" href="{{ path('add_info_supplier') }}">PROFIL FOURNISSEUR</a></li>
+                                        {% endif %}
+                                        <li class="nav-item"><a class="nav-link" href="{{ path('fos_user_change_password') }}">Changer mot de passe</a></li>
+                                        <li class="nav-item"><a href="{{ path('fos_user_security_logout') }}" class="nav-link" >{{ 'layout.logout'|trans({}, 'FOSUserBundle') }}</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    {% else %}
+                    <div class="visibility-menu-user-in-big-screen">
+                            <a href="{{ path('fos_user_security_login') }}" class="connection-inscription">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+                            <a href="{{ path('fos_user_registration_register') }}" class="connection-inscription">Insciption</a>
+                    {% endif %}
+                    </div>
+            </div>
+        </nav>
+    </div>
+</header>
+<div class="container-fluid content-body">
+{% block body %}
+
+    <section class="home_banner_area">
+        <div class="banner_inner d-flex align-items-center">
+            <div class="overlay bg-parallax" data-stellar-ratio="0.9" data-stellar-vertical-offset="0" data-background=""></div>
+            <div class="container">
+                <div class="banner_content text-center">
+                    <h3><div class="MyTitle">CONSULTEZ VOTRE <span>PHARMACIE</span></div></h3>
+                    <p style="color: whitesmoke;font-size: 20px" class="desc_title">Achetez vos médicaments et consultez votre médecin préféré via notre site Web.</p>
+                    <a class="black_btn" href="#">Commencer</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<section class="feature_area p_120">
+    <div class="container">
+        <div class="main_title">
+            <h2>Qu'est-ce qui nous a rendus uniques?</h2>
+            <p>Maintenant, vous pouvez obtenir des services de santé de n'importe où en ligne</p>
+        </div>
+        <div class="row feature_inner">
+            <div class="col-lg-4 col-md-6">
+                <div class="feature_item">
+                    <h4><i class="lnr lnr-user"></i>Médecins Experts</h4>
+                    <p>
+                        Vous pouvez obtenir l'aide de votre médecin et recevoir vos ordonnances.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="feature_item">
+                    <h4><i class="lnr lnr-store"></i>Pharmacie en ligne</h4>
+                    <p>Achetez vos médicaments de votre pharmacie préférée en ligne.</p>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="feature_item">
+                    <h4><i class="lnr lnr-map"></i>Annuaire nationale</h4>
+                    <p>Savoir quelle pharmacie ou quel médecin est le plus proche de vous et beaucoup plus d'informations
+                        .</p>
+                </div>
+            </div>
+            {#<div class="col-lg-4 col-md-6">#}
+                {#<div class="feature_item">#}
+                    {#<h4><i class="lnr lnr-rocket"></i>Technical Skills</h4>#}
+                    {#<p>Usage of the Internet is becoming more common due to rapid advancement of technology and power.</p>#}
+                {#</div>#}
+            {#</div>#}
+            {#<div class="col-lg-4 col-md-6">#}
+                {#<div class="feature_item">#}
+                    {#<h4><i class="lnr lnr-diamond"></i>Highly Recomended</h4>#}
+                    {#<p>Usage of the Internet is becoming more common due to rapid advancement of technology and power.</p>#}
+                {#</div>#}
+            {#</div>#}
+            {#<div class="col-lg-4 col-md-6">#}
+                {#<div class="feature_item">#}
+                    {#<h4><i class="lnr lnr-bubble"></i>Positive Reviews</h4>#}
+                    {#<p>Usage of the Internet is becoming more common due to rapid advancement of technology and power.</p>#}
+                {#</div>#}
+            {#</div>#}
+        </div>
+    </div>
+</section>
+{% endblock %}
+</div>
+
+<footer class="footer-area p_120">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3  col-md-6 col-sm-6">
+                <div class="single-footer-widget ab_wd">
+                    <h6 class="footer_title">A propos de nous</h6>
+                    <p>
+                        Nous sommes une équipe passionnée de jeunes développeurs qui tentent de trouver des solutions au système de santé en Tunisie. Nous espérons réussir avec ce projet appelé Pharmacity pour atteindre ce succès..</p>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="single-footer-widget contact_wd">
+                    <h6 class="footer_title">Contactez nous</h6>
+                    <p>Les berges de lac 1 Tunis-Tunisie</p>
+                    <a href="tel:01265325689746">+216-92 421 045</a>
+                    {#<a href="tel:01265325689746">012-6532-568-9746</a>#}
+                </div>
+            </div>
+            <div class="col-lg-5 col-md-6 col-sm-6 offset-lg-1">
+                <div class="single-footer-widget">
+                    <h6 class="footer_title">Envoyez nous un message ou une reclamation</h6>
+                    <p>Faites-nous confiance. Nous lisons tous les emails .</p>
+                    <div id="mc_embed_signup">
+                        <form target="_blank" action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01" method="get" class="subscribe_form relative">
+                            <div >
+                                <input name="EMAIL" placeholder="Votre adresse email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Votre adresse email'" required="" type="email">
+                            </div>
+                            <div class="input-group d-flex flex-row">
+                                <input name="TEXT" placeholder="Votre message" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Votre message '" required="" type="text">
+                                <button class="btn sub-btn"><span class="lnr lnr-arrow-right"></span></button>
+                            </div>
+                            <div class="mt-10 info"></div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row footer-bottom d-flex justify-content-between align-items-center">
+            <p class="col-lg-8 col-md-8 footer-text m-0"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+                Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">xxxxx</a>
+                <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+            <div class="col-lg-4 col-md-4 footer-social">
+                <a href="#"><i class="fa fa-facebook"></i></a>
+                <a href="#"><i class="fa fa-twitter"></i></a>
+                <a href="#"><i class="fa fa-dribbble"></i></a>
+                <a href="#"><i class="fa fa-behance"></i></a>
+            </div>
+        </div>
+    </div>
+</footer>
+{% block javascripts %}
+<script src="{{ asset('template/js/jquery-3.2.1.min.js') }}"></script>
+<script src="{{ asset('template/js/popper.js') }}"></script>
+<script src="{{ asset('template/js/bootstrap.min.js') }}"></script>
+
+<script src="{{ asset('template/js/theme.js') }}"></script>
+{% endblock %}
+</body>
+</html>
